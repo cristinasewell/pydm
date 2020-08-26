@@ -3,7 +3,7 @@ import logging
 from qtpy.QtCore import (Qt, QSize, Property, Slot, Q_ENUMS, QMargins)
 from qtpy.QtGui import QPainter
 from qtpy.QtWidgets import (QWidget, QButtonGroup, QGridLayout, QPushButton,
-                            QRadioButton, QStyleOption, QStyle)
+                            QRadioButton, QStyleOption, QStyle, QSizePolicy)
 
 from .base import PyDMWritableWidget
 from .. import data_plugins
@@ -51,7 +51,7 @@ class PyDMEnumButton(QWidget, PyDMWritableWidget, WidgetType):
         self.setLayout(QGridLayout(self))
         self._layout_spacing_horizontal = 6
         self._layout_spacing_vertical = 6
-        self._layout_margins = QMargins(9, 9, 9, 9)
+        self._layout_margins = QMargins(4, 4, 4, 4)
         self._btn_group = QButtonGroup()
         self._btn_group.setExclusive(True)
         self._btn_group.buttonClicked[int].connect(self.handle_button_clicked)
@@ -69,7 +69,7 @@ class PyDMEnumButton(QWidget, PyDMWritableWidget, WidgetType):
         QSize
         """
         # This is totally arbitrary, I just want *some* visible nonzero size
-        return QSize(50, 100)
+        return QSize(32, 23)
 
     @Property("QStringList")
     def items(self):
@@ -402,6 +402,7 @@ class PyDMEnumButton(QWidget, PyDMWritableWidget, WidgetType):
                 w.setCheckable(self.checkable)
                 w.setText(entry)
                 w.setVisible(False)
+                w.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
                 self._widgets.append(w)
                 self._btn_group.addButton(w, idx)
 
